@@ -4,7 +4,7 @@ import random
 import gamestate
 
 WIDTH = HEIGHT = 800
-MAX_FPS = 30
+MAX_FPS = 120
 
 # barvy
 BLACK = pygame.Color("white")
