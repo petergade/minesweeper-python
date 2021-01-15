@@ -16,6 +16,8 @@ pygame.mixer.init()
 
 # nacteni grafiky, hudby, zvuku
 
+
+
 # definice spritu
 my_sprites = pygame.sprite.Group()
 
