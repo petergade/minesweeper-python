@@ -21,6 +21,12 @@ class MainScreen:
     def show(self) -> common.GameResult:
         # TODO: podle width a height urcit rozmery obrazovky a kosticky
         # TODO: nacteni grafiky, zvuků, hudby, animací
+        pole = pygame.image.load(path.join(folder, "pole.png"))
+        pole_odkryte = pygame.image.load(path.join(folder, "pole-odkryte.png"))
+        vybuch = pygame.mixer.Sound(path.join(folder, "vybuch.mp3"))
+
+
+
         screen = pygame.display.set_mode((512, 512))
         pygame.display.set_caption("minesweeper")
         clock = pygame.time.Clock()
