@@ -49,8 +49,8 @@ BLACK = pygame.Color("black")
 GREY = pygame.Color("grey")
 BLUE = pygame.Color(33, 150, 243)
 LIGHT_BLUE = pygame.Color(0, 191, 255)
-GREY2 = pygame.Color(224,224,224)
-RED = pygame.Color(204,0,0)
+GREY2 = pygame.Color(224, 224, 224)
+RED = pygame.Color(204, 0, 0)
 
 pygame.font.init()
 FONT = pygame.font.Font("freesansbold.ttf", 24)
@@ -65,7 +65,8 @@ def set_game_icon():
 
 
 def set_game_logo(w, h, surface):
-    logo = pygame.image.load(path.join(assets_folder, "mina.png"))
+    logo = pygame.image.load(path.join(assets_folder, "logo.png"))
     logo = pygame.transform.scale(logo, (w, h))
     logo = logo.convert()
+    logo.set_colorkey(BLACK)
     surface.blit(logo, pygame.Rect(0, 0, w, h))
