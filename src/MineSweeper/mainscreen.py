@@ -33,6 +33,10 @@ class MainScreen:
     def show(self) -> common.GameResult:
         # TODO: podle width a height urcit rozmery obrazovky a kosticky
         # TODO: nacteni grafiky, zvuků, hudby, animací
+
+        player = Spritesheet(path.join(folder, ""))
+        folder = path.dirname(_file_)
+
         # Grafika
         self.load_images()
 
