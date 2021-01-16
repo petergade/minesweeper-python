@@ -1,5 +1,5 @@
 from typing import List, Tuple
-from common import SpecialSquareValues, GameResult
+from common import SpecialSquareValues, GameResultType
 import random
 
 FOG = SpecialSquareValues.FOG
@@ -15,7 +15,7 @@ class GameState:
         self.player_map: List[List[int]] = [[FOG for _ in range(width)] for _ in range(height)]
         self.game_map: List[List[int]] = [[0 for _ in range(width)] for _ in range(height)]
         self.is_initialized = False
-        self.game_result: GameResult = GameResult.UNKNOWN
+        self.game_result_type: GameResultType = GameResultType.UNKNOWN
 
     def initialize_game_map(self, row_selected, column_selected):
         mines_count = 0
@@ -43,7 +43,7 @@ class GameState:
             # prvni klik, inicializujeme hru
             self.initialize_game_map(row, column)
         if self.game_map[row][column] == MINE:
-            self.game_result = GameResult.LOST
+            self.game_result_type = GameResultType.LOST
         else:
             self.player_map[row][column] = self.game_map[row][column]
             print(f"row: {row}, column: {column}, value: {self.player_map[row][column]}")

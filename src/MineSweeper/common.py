@@ -1,15 +1,23 @@
 import pygame
+import time
+
 
 class SpecialSquareValues:
     FOG = -1
     FLAG = -2
     MINE = -3
 
-# TODO: udelat slozitejsi - elapsed_time
-class GameResult:
+
+class GameResultType:
     UNKNOWN = 0
     WIN = 1
     LOST = 2
+
+
+class GameResult:
+    def __init__(self, game_result_type: GameResultType, elapsed_time: int):
+        self.game_result_type = game_result_type
+        self.elapsed_time = elapsed_time # pocet sekund
 
 
 class Difficulty:

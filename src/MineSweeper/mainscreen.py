@@ -56,13 +56,15 @@ class MainScreen:
             # render
             pygame.display.flip()
 
-            if self.game_state.game_result == common.GameResult.LOST or self.game_state.game_result == common.GameResult.WIN:
+            if self.game_state.game_result_type == common.GameResultType.LOST or \
+                    self.game_state.game_result_type == common.GameResultType.WIN:
                 time.sleep(2)
-                return self.game_state.game_result
+                # TODO: nahradit skutecny casem
+                return common.GameResult(self.game_state.game_result_type, 0)
 
     def draw_game_state(self, screen: pygame.Surface) -> None:
-        print(self.game_state.game_result)
-        if self.game_state.game_result == common.GameResult.LOST or self.game_state.game_result == common.GameResult.WIN:
+        print(self.game_state.game_result_type)
+        if self.game_state.game_result_type == common.GameResultType.LOST or self.game_state.game_result_type == common.GameResultType.WIN:
             map_to_draw = self.game_state.game_map
         else:
             map_to_draw = self.game_state.player_map if self.hide_board else self.game_state.game_map
