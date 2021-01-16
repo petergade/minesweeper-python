@@ -17,11 +17,13 @@ class StartScreen:
         text_surface = font.render(text, True, colour)
         return text_surface, text_surface.get_rect()
 
-    def button(self, text, x, y, w, h, inactive_colour=BLUE, active_colour=LIGHT_BLUE, text_colour=WHITE):
+    def button(self, text, x, y, w, h, click, inactive_colour=BLUE, active_colour=LIGHT_BLUE, text_colour=WHITE):
         mouse = pygame.mouse.get_pos()
         return_value = False
         if x < mouse[0] < x + w and y < mouse[1] < y + h:  # if mouse is hovering the button
             pygame.draw.rect(self.screen, active_colour, (x, y, w, h))
+            if click and pygame.time.get_ticks() > 100:
+                return_value = True
         else:
             pygame.draw.rect(self.screen, inactive_colour, (x, y, w, h))
 
@@ -39,8 +41,8 @@ class StartScreen:
         # TODO: udelat prvky pro zadani sirky, vysky a poctu min (kdyz zbyde cas)
         self.screen.fill(common.WHITE)
 
-
         while True:
+            click = False
             self.clock.tick(common.MAX_FPS)
             for e in pygame.event.get():
                 # print(e)
@@ -48,10 +50,11 @@ class StartScreen:
                     pygame.quit()
                     sys.exit()
                 elif e.type == pygame.MOUSEBUTTONUP:
-                    # TODO: najit vybrane tlacitko nebo custom rozmery a predat obtiznost jako vystup metody
-                    return common.Beginner()
-                    # return common.Difficulty(width, height, mines) # custom rozmery a pocet min
-            self.button('B E G I N N E R', 50, 150, 270, 50)
-            self.button('I N T E R M E D I A T E', 50, 250, 270, 50)
-            self.button('E X P E R T', 50, 350, 270, 50)
+                    click = True
+            if self.button('B E G I N N E R', 50, 150, 270, 50, click):
+                return common.Beginner()
+            if self.button('I N T E R M E D I A T E', 50, 250, 270, 50, click):
+                return common.Intermediate()
+            if self.button('E X P E R T', 50, 350, 270, 50, click):
+                return common.Expert()
             pygame.display.flip()
