@@ -79,9 +79,9 @@ class MainScreen:
 
             if self.game_state.game_result_type == common.GameResultType.LOST or \
                     self.game_state.game_result_type == common.GameResultType.WIN:
-                time.sleep(2)
+                time.sleep(5)
                 # TODO: nahradit skutecny casem
-                return common.GameResult(self.game_state.game_result_type, 0)
+                return common.GameResult(self.game_state.game_result_type, self.game_state.elapsed_seconds)
 
     def initialize_sprites(self):
         for r in range(self.height):
@@ -96,15 +96,3 @@ class MainScreen:
             map_to_draw = self.game_state.player_map if self.hide_board else self.game_state.game_map
         for brick in self.bricks:
             brick.value = map_to_draw[brick.r][brick.c]
-
-
-    @staticmethod
-    def get_text_to_draw(square_type: int) -> str:
-        if square_type == common.SpecialSquareValues.FOG:
-            return 'F'
-        elif square_type == common.SpecialSquareValues.FLAG:
-            return 'V'
-        elif square_type == common.SpecialSquareValues.MINE:
-            return 'X'
-        else:
-            return str(square_type)

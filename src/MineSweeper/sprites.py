@@ -17,7 +17,7 @@ class Brick(pygame.sprite.Sprite):
     def update(self) -> None:
         center = self.rect.center
         self.image = self.images[self.value]
-        print(self.value)
+        # print(self.value)
         self.rect = self.image.get_rect()
         self.rect.center = center
 
