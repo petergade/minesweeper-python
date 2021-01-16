@@ -21,9 +21,9 @@ class MainScreen:
     def show(self) -> common.GameResult:
         # TODO: podle width a height urcit rozmery obrazovky a kosticky
         # TODO: nacteni grafiky, zvuků, hudby, animací
+        # Grafika
         block_main = pygame.image.load(path.join(folder, "pole.png"))
         block_plain = pygame.image.load(path.join(folder, "pole-odkryte.png"))
-        explosion = pygame.mixer.Sound(path.join(folder, "vybuch.mp3"))
         block1 = pygame.image.load(path.join(folder, "pole.png"))
         block2 = pygame.image.load(path.join(folder, "pole.png"))
         block3 = pygame.image.load(path.join(folder, "pole.png"))
@@ -33,6 +33,9 @@ class MainScreen:
         block7 = pygame.image.load(path.join(folder, "pole.png"))
         block8 = pygame.image.load(path.join(folder, "pole.png"))
         flag = pygame.image.load(path.join(folder, "flag.png"))
+
+        # Zvuky, hudba, animace
+        explosion = pygame.mixer.Sound(path.join(folder, "vybuch.mp3"))
 
 
 
