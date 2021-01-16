@@ -13,7 +13,7 @@ class StartScreen:
         text_surface = font.render(text, True, colour)
         return text_surface, text_surface.get_rect()
 
-    def button(self, text, x, y, w, h, click, inactive_colour=common.BLUE, active_colour=common.LIGHT_BLUE,
+    def button(self, text, x, y, w, h, click, inactive_colour=common.BLACK, active_colour=common.RED,
                text_colour=common.WHITE):
         mouse = pygame.mouse.get_pos()
         return_value = False
@@ -37,7 +37,7 @@ class StartScreen:
         # TODO: udelat nejaky uvodni label (uvitani do hry)
         # TODO: udelat tlacitko pro vybrani obriznosti
         # TODO: udelat prvky pro zadani sirky, vysky a poctu min (kdyz zbyde cas)
-        self.screen.fill(common.WHITE)
+        self.screen.fill(common.GREY2)
 
         while True:
             click = False
