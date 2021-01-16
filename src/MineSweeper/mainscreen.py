@@ -60,15 +60,17 @@ class MainScreen:
                 if e.type == pygame.QUIT:
                     pygame.quit()
                     sys.exit()
-                elif e.type == pygame.MOUSEBUTTONDOWN:
+                elif e.type == pygame.MOUSEBUTTONUP:
                     # TODO: udelat detekci kolize se spritem jak rikal Safr
                     location = pygame.mouse.get_pos()
-                    col = location[0] // common.SQ_SIZE
-                    row = location[1] // common.SQ_SIZE
-                    if e.button == 1:  # leve tlacitko
-                        self.game_state.reveal(row, col)
-                    elif e.button == 3:  # prave tlacitko
-                        self.game_state.add_flag(row, col)
+                    for brick in self.bricks:
+                        if brick.collide_rect(brick, pygame.Rect(location[0], location[1], 1, 1)):
+                            row = brick.r
+                            col = brick.c
+                            if e.button == 1:  # leve tlacitko
+                                self.game_state.reveal(row, col)
+                            elif e.button == 3:  # prave tlacitko
+                                self.game_state.add_flag(row, col)
                 elif e.type == pygame.KEYDOWN:
                     if e.key == pygame.K_q:
                         self.hide_board = not self.hide_board
