@@ -2,10 +2,6 @@ import pygame
 import sys
 import common
 
-BLUE = 33, 150, 243
-LIGHT_BLUE = 0, 191, 255
-WHITE = 255, 255, 255
-BLACK = 0, 0, 0
 
 class StartScreen:
     def __init__(self):
@@ -13,11 +9,12 @@ class StartScreen:
         self.clock = pygame.time.Clock()
 
     @staticmethod
-    def text_objects(text, font, colour=BLACK):
+    def text_objects(text, font, colour=common.BLACK):
         text_surface = font.render(text, True, colour)
         return text_surface, text_surface.get_rect()
 
-    def button(self, text, x, y, w, h, click, inactive_colour=BLUE, active_colour=LIGHT_BLUE, text_colour=WHITE):
+    def button(self, text, x, y, w, h, click, inactive_colour=common.BLUE, active_colour=common.LIGHT_BLUE,
+               text_colour=common.WHITE):
         mouse = pygame.mouse.get_pos()
         return_value = False
         if x < mouse[0] < x + w and y < mouse[1] < y + h:  # if mouse is hovering the button
@@ -35,7 +32,7 @@ class StartScreen:
     def show(self) -> common.Difficulty:
         self.screen = pygame.display.set_mode((370, 600))
         pygame.display.set_caption("minesweeper")
-
+        common.set_game_icon()
 
         # TODO: udelat nejaky uvodni label (uvitani do hry)
         # TODO: udelat tlacitko pro vybrani obriznosti

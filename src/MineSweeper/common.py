@@ -1,5 +1,5 @@
 import pygame
-import time
+from os import path
 
 
 class SpecialSquareValues:
@@ -47,6 +47,16 @@ SQ_SIZE = 36
 WHITE = pygame.Color("white")
 BLACK = pygame.Color("black")
 GREY = pygame.Color("grey")
+BLUE = pygame.Color(33, 150, 243)
+LIGHT_BLUE = pygame.Color(0, 191, 255)
 
 pygame.font.init()
 FONT = pygame.font.Font("freesansbold.ttf", 24)
+
+assets_folder = path.join(path.dirname(__file__), "assets")
+
+
+def set_game_icon():
+    icon = pygame.image.load(path.join(assets_folder, "mina.png")).convert()
+    icon.set_colorkey(BLACK)
+    pygame.display.set_icon(icon)

@@ -6,8 +6,6 @@ from os import path
 from gamestate import GameState
 from sprites import Brick
 
-assets_folder = path.join(path.dirname(__file__), "assets")
-
 
 class MainScreen:
     def __init__(self, difficulty: common.Difficulty):
@@ -19,24 +17,17 @@ class MainScreen:
         self.images = {}
         self.bricks = pygame.sprite.Group()
 
-    @staticmethod
-    def load_icon():
-        icon = pygame.image.load(path.join(assets_folder, "mina.png")).convert()
-        icon.set_colorkey(common.BLACK)
-        pygame.display.set_icon(icon)
-
     def load_images(self):
-        self.images[common.SpecialSquareValues.MINE] = pygame.image.load(path.join(assets_folder, "mina2.png")).convert()
-        self.images[common.SpecialSquareValues.FLAG] = pygame.image.load(path.join(assets_folder, "flag2.png")).convert()
-        self.images[common.SpecialSquareValues.FOG] = pygame.image.load(path.join(assets_folder, "pole.png")).convert()
-        self.images[0] = pygame.image.load(path.join(assets_folder, "pole-odkryte.png")).convert()
+        self.images[common.SpecialSquareValues.MINE] = pygame.image.load(path.join(common.assets_folder, "mina2.png")).convert()
+        self.images[common.SpecialSquareValues.FLAG] = pygame.image.load(path.join(common.assets_folder, "flag2.png")).convert()
+        self.images[common.SpecialSquareValues.FOG] = pygame.image.load(path.join(common.assets_folder, "pole.png")).convert()
+        self.images[0] = pygame.image.load(path.join(common.assets_folder, "pole-odkryte.png")).convert()
         for i in range(8):
-            self.images[i + 1] = pygame.image.load(path.join(assets_folder, f"pole-{i + 1}.png")).convert()
+            self.images[i + 1] = pygame.image.load(path.join(common.assets_folder, f"pole-{i + 1}.png")).convert()
 
     def scale_images(self):
         for key in self.images.keys():
             self.images[key] = pygame.transform.scale(self.images[key], (common.SQ_SIZE, common.SQ_SIZE))
-
 
     def show(self) -> common.GameResult:
         # TODO: podle width a height urcit rozmery obrazovky a kosticky
@@ -47,11 +38,11 @@ class MainScreen:
         self.scale_images()
 
         # Zvuky, hudba, animace
-        explosion_sound = pygame.mixer.Sound(path.join(assets_folder, "vybuch.mp3"))
+        explosion_sound = pygame.mixer.Sound(path.join(common.assets_folder, "vybuch.mp3"))
 
         screen = pygame.display.set_mode((self.width * 32, self.height * 32))
         pygame.display.set_caption("minesweeper")
-        self.load_icon()
+        common.set_game_icon()
         clock = pygame.time.Clock()
         self.game_state = GameState(self.width, self.height, self.mines)
         self.initialize_sprites()
