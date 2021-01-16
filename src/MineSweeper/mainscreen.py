@@ -4,8 +4,9 @@ import sys
 import time
 from os import path
 from gamestate import GameState
+from sprites import Brick
 
-SQ_SIZE = 36
+
 
 assets_folder = path.join(path.dirname(__file__), "assets")
 
@@ -18,6 +19,7 @@ class MainScreen:
         self.height: int = difficulty.height
         self.mines: int = difficulty.mines
         self.images = {}
+        self.sprites = pygame.sprite.Group()
 
     def load_images(self):
         self.images[common.SpecialSquareValues.MINE] = pygame.image.load(path.join(assets_folder, "mina.png"))
@@ -45,6 +47,7 @@ class MainScreen:
         pygame.display.set_caption("minesweeper")
         clock = pygame.time.Clock()
         self.game_state = GameState(self.width, self.height, self.mines)
+        self.initialize_sprites()
         running = True
 
         while running:
@@ -59,8 +62,8 @@ class MainScreen:
                 elif e.type == pygame.MOUSEBUTTONDOWN:
                     # TODO: udelat detekci kolize se spritem jak rikal Safr
                     location = pygame.mouse.get_pos()
-                    col = location[0] // SQ_SIZE
-                    row = location[1] // SQ_SIZE
+                    col = location[0] // common.SQ_SIZE
+                    row = location[1] // common.SQ_SIZE
                     if e.button == 1:  # leve tlacitko
                         self.game_state.reveal(row, col)
                     elif e.button == 3:  # prave tlacitko
@@ -70,10 +73,11 @@ class MainScreen:
                         self.hide_board = not self.hide_board
 
             # update
-            screen.fill(common.WHITE)
-            self.draw_game_state(screen)
+            self.sprites.update()
 
             # render
+            screen.fill(common.WHITE)
+            self.sprites.draw(screen)
             pygame.display.flip()
 
             if self.game_state.game_result_type == common.GameResultType.LOST or \
@@ -82,22 +86,22 @@ class MainScreen:
                 # TODO: nahradit skutecny casem
                 return common.GameResult(self.game_state.game_result_type, 0)
 
+    def initialize_sprites(self):
+        for r in range(self.height):
+            for c in range(self.width):
+                brick = Brick(r * common.SQ_SIZE, c * common.SQ_SIZE, self.images)
+                self.sprites.add(brick)
+
     def draw_game_state(self, screen: pygame.Surface) -> None:
-        print(self.game_state.game_result_type)
         if self.game_state.game_result_type == common.GameResultType.LOST or self.game_state.game_result_type == common.GameResultType.WIN:
             map_to_draw = self.game_state.game_map
         else:
             map_to_draw = self.game_state.player_map if self.hide_board else self.game_state.game_map
         for r in range(self.height):
             for c in range(self.width):
-                pygame.draw.rect(screen, common.GREY, pygame.Rect(c * SQ_SIZE, r * SQ_SIZE, SQ_SIZE, SQ_SIZE), 2)
-        for r in range(self.height):
-            for c in range(self.width):
                 text = self.get_text_to_draw(map_to_draw[r][c])
-                text_surface = common.FONT.render(text, True, common.BLACK)
-                text_rect = text_surface.get_rect()
-                text_rect.center = (c * SQ_SIZE + 16, r * SQ_SIZE + 16)
-                screen.blit(text_surface, text_rect)
+                brick = Brick(self.images[common.SpecialSquareValues.FOG])
+
 
     @staticmethod
     def get_text_to_draw(square_type: int) -> str:

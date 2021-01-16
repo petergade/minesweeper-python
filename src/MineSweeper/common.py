@@ -43,6 +43,7 @@ class Expert(Difficulty):
 
 
 MAX_FPS = 30
+SQ_SIZE = 36
 WHITE = pygame.Color("white")
 BLACK = pygame.Color("black")
 GREY = pygame.Color("grey")
