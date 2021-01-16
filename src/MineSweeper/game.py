@@ -10,8 +10,8 @@ class Game:
 
     def start(self):
         start_screen = StartScreen()
-        diffculty = start_screen.show()
-        main_screen = MainScreen(diffculty)
+        difficulty = start_screen.show()
+        main_screen = MainScreen(difficulty)
         game_result = main_screen.show()
         end_screen = EndScreen(game_result)
         end_screen.show()

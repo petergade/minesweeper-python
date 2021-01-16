@@ -5,7 +5,7 @@ class SpecialSquareValues:
     FLAG = -2
     MINE = -3
 
-
+# TODO: udelat slozitejsi - elapsed_time
 class GameResult:
     UNKNOWN = 0
     WIN = 1
