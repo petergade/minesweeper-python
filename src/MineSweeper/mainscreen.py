@@ -4,22 +4,27 @@ import sys
 import time
 from gamestate import GameState
 
+# TODO: toto by melo zmizet jakmile vykreslime obrazovku pomoci predanych parametru z difficulty
 WIDTH = HEIGHT = 512
 DIMENSION = 8
 SQ_SIZE = HEIGHT // DIMENSION
 
 
 class MainScreen:
-    def __init__(self):
-        self.hide_board = True
+    def __init__(self, difficulty: common.Difficulty):
+        self.hide_board = True  # parametr pro testovani, zda se ma zobrazovat zakryta nebo odkryta hraci plocha
         self.game_state = None
+        self.width: int = difficulty.width
+        self.height: int = difficulty.height
+        self.mines: int = difficulty.mines
 
     def show(self) -> common.GameResult:
-
+        # TODO: podle width a height urcit rozmery obrazovky a kosticky
+        # TODO: nacteni grafiky, zvuků, hudby, animací
         screen = pygame.display.set_mode((512, 512))
         pygame.display.set_caption("minesweeper")
         clock = pygame.time.Clock()
-        self.game_state = GameState(8, 8, 10)
+        self.game_state = GameState(self.width, self.height, self.mines)
         running = True
 
         while running:
@@ -32,6 +37,7 @@ class MainScreen:
                     pygame.quit()
                     sys.exit()
                 elif e.type == pygame.MOUSEBUTTONDOWN:
+                    # TODO: udelat detekci kolize se spritem jak rikal Safr
                     location = pygame.mouse.get_pos()
                     col = location[0] // SQ_SIZE
                     row = location[1] // SQ_SIZE
@@ -63,8 +69,8 @@ class MainScreen:
         for r in range(DIMENSION):
             for c in range(DIMENSION):
                 pygame.draw.rect(screen, common.GREY, pygame.Rect(c * SQ_SIZE, r * SQ_SIZE, SQ_SIZE, SQ_SIZE), 2)
-        for r in range(self.game_state.height):
-            for c in range(self.game_state.width):
+        for r in range(self.height):
+            for c in range(self.width):
                 text = self.get_text_to_draw(map_to_draw[r][c])
                 text_surface = common.FONT.render(text, True, common.BLACK)
                 text_rect = text_surface.get_rect()
