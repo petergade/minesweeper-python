@@ -80,7 +80,6 @@ class MainScreen:
             if self.game_state.game_result_type == common.GameResultType.LOST or \
                     self.game_state.game_result_type == common.GameResultType.WIN:
                 time.sleep(5)
-                # TODO: nahradit skutecny casem
                 return common.GameResult(self.game_state.game_result_type, self.game_state.elapsed_seconds)
 
     def initialize_sprites(self):

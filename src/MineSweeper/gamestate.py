@@ -47,7 +47,9 @@ class GameState:
         if not self.is_initialized:
             # prvni klik, inicializujeme hru
             self.initialize_game_map(row, column)
-        if self.game_map[row][column] == MINE:
+        if self.player_map[row][column] == FLAG:
+            return False
+        elif self.game_map[row][column] == MINE:
             self.end_game(GameResultType.LOST)
             return True
         else:
