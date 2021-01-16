@@ -23,7 +23,7 @@ class StartScreen:
                 if e.type == pygame.QUIT:
                     pygame.quit()
                     sys.exit()
-                elif e.type == pygame.MOUSEBUTTONDOWN:
+                elif e.type == pygame.MOUSEBUTTONUP:
                     # TODO: najit vybrane tlacitko nebo custom rozmery a predat obtiznost jako vystup metody
                     return common.Beginner()
                     # return common.Difficulty(width, height, mines) # custom rozmery a pocet min

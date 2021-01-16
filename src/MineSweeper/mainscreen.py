@@ -42,9 +42,6 @@ class MainScreen:
 
         # Zvuky, hudba, animace
         explosion_sound = pygame.mixer.Sound(path.join(assets_folder, "vybuch.mp3"))
-        background_music = pygame.mixer.Sound(path.join(assets_folder, "relax-mix.mp3"))
-        pygame.mixer.init()
-        background_music.play()
 
         screen = pygame.display.set_mode((self.width * 32, self.height * 32))
         pygame.display.set_caption("minesweeper")
@@ -81,7 +78,6 @@ class MainScreen:
             self.bricks.update()
 
             # render
-            #screen.fill(common.WHITE)
             self.bricks.draw(screen)
             pygame.display.flip()
 
