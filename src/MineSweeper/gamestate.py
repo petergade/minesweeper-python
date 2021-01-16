@@ -23,8 +23,7 @@ class GameState:
             row = random.randint(0, self.height - 1)
             column = random.randint(0, self.width - 1)
 
-            if (row < row_selected - 1 or row > row_selected + 1) and \
-                    (column < column_selected - 1 or column > column_selected + 1) and \
+            if (abs(row - row_selected) > 1 or abs(column - column_selected) > 1) and \
                     self.game_map[row][column] != MINE:
                 self.game_map[row][column] = MINE
                 mines_count += 1
@@ -54,7 +53,7 @@ class GameState:
                     end_col: int = column + direction[1]
                     if end_row < 0 or end_row >= self.height or end_col < 0 or end_col >= self.width:
                         # jsme mimo hraci pole
-                        return
+                        next
                     else:
                         if self.player_map[end_row][end_col] == FOG:
                             self.reveal(end_row, end_col)
