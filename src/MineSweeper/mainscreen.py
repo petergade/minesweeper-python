@@ -20,8 +20,8 @@ class MainScreen:
         self.bricks = pygame.sprite.Group()
 
     def load_images(self):
-        self.images[common.SpecialSquareValues.MINE] = pygame.image.load(path.join(assets_folder, "mina.png")).convert()
-        self.images[common.SpecialSquareValues.FLAG] = pygame.image.load(path.join(assets_folder, "flag.png")).convert()
+        self.images[common.SpecialSquareValues.MINE] = pygame.image.load(path.join(assets_folder, "mina2.png")).convert()
+        self.images[common.SpecialSquareValues.FLAG] = pygame.image.load(path.join(assets_folder, "flag2.png")).convert()
         self.images[common.SpecialSquareValues.FOG] = pygame.image.load(path.join(assets_folder, "pole.png")).convert()
         self.images[0] = pygame.image.load(path.join(assets_folder, "pole-odkryte.png")).convert()
         for i in range(8):
