@@ -24,19 +24,20 @@ class MainScreen:
         # Grafika
         block_main = pygame.image.load(path.join(folder, "pole.png"))
         block_plain = pygame.image.load(path.join(folder, "pole-odkryte.png"))
-        block1 = pygame.image.load(path.join(folder, "pole.png"))
-        block2 = pygame.image.load(path.join(folder, "pole.png"))
-        block3 = pygame.image.load(path.join(folder, "pole.png"))
-        block4 = pygame.image.load(path.join(folder, "pole.png"))
-        block5 = pygame.image.load(path.join(folder, "pole.png"))
-        block6 = pygame.image.load(path.join(folder, "pole.png"))
-        block7 = pygame.image.load(path.join(folder, "pole.png"))
-        block8 = pygame.image.load(path.join(folder, "pole.png"))
+        block1 = pygame.image.load(path.join(folder, "pole-1.png"))
+        block2 = pygame.image.load(path.join(folder, "pole-2.png"))
+        block3 = pygame.image.load(path.join(folder, "pole-3.png"))
+        block4 = pygame.image.load(path.join(folder, "pole-4.png"))
+        block5 = pygame.image.load(path.join(folder, "pole-5.png"))
+        block6 = pygame.image.load(path.join(folder, "pole-6.png"))
+        block7 = pygame.image.load(path.join(folder, "pole-7.png"))
+        block8 = pygame.image.load(path.join(folder, "pole-8.png"))
         flag = pygame.image.load(path.join(folder, "flag.png"))
+        mine = pygame.image.load(path.join(folder, "mina.png"))
 
         # Zvuky, hudba, animace
-        explosion = pygame.mixer.Sound(path.join(folder, "vybuch.mp3"))
-
+        explosion_sound = pygame.mixer.Sound(path.join(folder, "vybuch.mp3"))
+        punch = pygame.mixer.Sound(path.join(folder, "relax-mix.mp3"))
 
 
         screen = pygame.display.set_mode((512, 512))
