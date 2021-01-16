@@ -65,7 +65,7 @@ def set_game_icon():
 
 
 def set_game_logo(w, h, surface):
-    logo = pygame.image.load(path.join(assets_folder, "logo.png"))
+    logo = pygame.image.load(path.join(assets_folder, "logo2.jpg"))
     logo = pygame.transform.scale(logo, (w, h))
     logo = logo.convert()
     #logo.set_colorkey(BLACK)
