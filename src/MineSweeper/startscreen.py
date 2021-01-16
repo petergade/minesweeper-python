@@ -35,9 +35,9 @@ class StartScreen:
         common.set_game_icon()
 
         # TODO: udelat nejaky uvodni label (uvitani do hry)
-        # TODO: udelat tlacitko pro vybrani obriznosti
         # TODO: udelat prvky pro zadani sirky, vysky a poctu min (kdyz zbyde cas)
         self.screen.fill(common.GREY2)
+        common.set_game_logo(370, 120, self.screen)
 
         while True:
             click = False

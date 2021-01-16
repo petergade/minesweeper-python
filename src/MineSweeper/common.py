@@ -62,3 +62,10 @@ def set_game_icon():
     icon = pygame.image.load(path.join(assets_folder, "mina.png")).convert()
     icon.set_colorkey(BLACK)
     pygame.display.set_icon(icon)
+
+
+def set_game_logo(w, h, surface):
+    logo = pygame.image.load(path.join(assets_folder, "mina.png"))
+    logo = pygame.transform.scale(logo, (w, h))
+    logo = logo.convert()
+    surface.blit(logo, pygame.Rect(0, 0, w, h))

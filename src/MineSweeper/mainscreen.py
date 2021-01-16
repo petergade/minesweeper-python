@@ -2,10 +2,10 @@ import pygame
 import common
 import sys
 import time
+import os
 from os import path
 from gamestate import GameState
 from sprites import Brick
-
 
 class MainScreen:
     def __init__(self, difficulty: common.Difficulty):
@@ -30,8 +30,6 @@ class MainScreen:
             self.images[key] = pygame.transform.scale(self.images[key], (common.SQ_SIZE, common.SQ_SIZE))
 
     def show(self) -> common.GameResult:
-        # TODO: podle width a height urcit rozmery obrazovky a kosticky
-        # TODO: nacteni grafiky, zvuků, hudby, animací
 
         # Grafika
         self.load_images()
