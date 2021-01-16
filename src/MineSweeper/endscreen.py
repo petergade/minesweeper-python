@@ -11,7 +11,7 @@ class EndScreen:
 
     def show(self):
         self.screen = pygame.display.set_mode((300, 400))
-        pygame.display.set_caption("End of the game")
+        pygame.display.set_caption("Minesweeper")
         running = True
 
         while running:
