@@ -64,7 +64,7 @@ class MainScreen:
                     # TODO: udelat detekci kolize se spritem jak rikal Safr
                     location = pygame.mouse.get_pos()
                     for brick in self.bricks:
-                        if brick.collide_rect(brick, pygame.Rect(location[0], location[1], 1, 1)):
+                        if brick.rect.collidepoint(e.pos):
                             row = brick.r
                             col = brick.c
                             if e.button == 1:  # leve tlacitko
