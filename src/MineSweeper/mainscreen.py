@@ -2,12 +2,15 @@ import pygame
 import common
 import sys
 import time
+from os import path
 from gamestate import GameState
 
 # TODO: toto by melo zmizet jakmile vykreslime obrazovku pomoci predanych parametru z difficulty
 WIDTH = HEIGHT = 512
 DIMENSION = 8
 SQ_SIZE = HEIGHT // DIMENSION
+
+assets_folder = path.join(path.dirname(__file__), "assets")
 
 
 class MainScreen:
@@ -17,28 +20,25 @@ class MainScreen:
         self.width: int = difficulty.width
         self.height: int = difficulty.height
         self.mines: int = difficulty.mines
+        self.images = {}
+
+    def load_images(self):
+        self.images[common.SpecialSquareValues.MINE] = pygame.image.load(path.join(assets_folder, "mina.png"))
+        self.images[common.SpecialSquareValues.FLAG] = pygame.image.load(path.join(assets_folder, "flag.png"))
+        self.images[common.SpecialSquareValues.FOG] = pygame.image.load(path.join(assets_folder, "pole.png"))
+        self.images[0] = pygame.image.load(path.join(assets_folder, "pole-odkryte.png"))
+        for i in range(8):
+            self.images[i + 1] = pygame.image.load(path.join(assets_folder, f"pole-{i + 1}.png"))
 
     def show(self) -> common.GameResult:
         # TODO: podle width a height urcit rozmery obrazovky a kosticky
         # TODO: nacteni grafiky, zvuků, hudby, animací
         # Grafika
-        block_main = pygame.image.load(path.join(folder, "pole.png"))
-        block_plain = pygame.image.load(path.join(folder, "pole-odkryte.png"))
-        block1 = pygame.image.load(path.join(folder, "pole-1.png"))
-        block2 = pygame.image.load(path.join(folder, "pole-2.png"))
-        block3 = pygame.image.load(path.join(folder, "pole-3.png"))
-        block4 = pygame.image.load(path.join(folder, "pole-4.png"))
-        block5 = pygame.image.load(path.join(folder, "pole-5.png"))
-        block6 = pygame.image.load(path.join(folder, "pole-6.png"))
-        block7 = pygame.image.load(path.join(folder, "pole-7.png"))
-        block8 = pygame.image.load(path.join(folder, "pole-8.png"))
-        flag = pygame.image.load(path.join(folder, "flag.png"))
-        mine = pygame.image.load(path.join(folder, "mina.png"))
+        self.load_images()
 
         # Zvuky, hudba, animace
-        explosion_sound = pygame.mixer.Sound(path.join(folder, "vybuch.mp3"))
-        punch = pygame.mixer.Sound(path.join(folder, "relax-mix.mp3"))
-
+        explosion_sound = pygame.mixer.Sound(path.join(assets_folder, "vybuch.mp3"))
+        background_music = pygame.mixer.Sound(path.join(assets_folder, "relax-mix.mp3"))
 
         screen = pygame.display.set_mode((512, 512))
         pygame.display.set_caption("minesweeper")

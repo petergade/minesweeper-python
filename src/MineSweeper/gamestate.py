@@ -1,6 +1,7 @@
 from typing import List, Tuple
 from common import SpecialSquareValues, GameResultType
 import random
+import time
 
 FOG = SpecialSquareValues.FOG
 MINE = SpecialSquareValues.MINE
@@ -8,6 +9,7 @@ FLAG = SpecialSquareValues.FLAG
 
 
 class GameState:
+
     def __init__(self, width: int, height: int, mines: int):
         self.mines: int = mines
         self.width: int = width
@@ -16,8 +18,12 @@ class GameState:
         self.game_map: List[List[int]] = [[0 for _ in range(width)] for _ in range(height)]
         self.is_initialized = False
         self.game_result_type: GameResultType = GameResultType.UNKNOWN
+        self.elapsed_seconds = None
+        self.game_started = None
+        self.game_finished = None
 
     def initialize_game_map(self, row_selected, column_selected):
+        self.game_started = time.time()
         mines_count = 0
         while mines_count < self.mines:
             row = random.randint(0, self.height - 1)
@@ -43,6 +49,9 @@ class GameState:
             self.initialize_game_map(row, column)
         if self.game_map[row][column] == MINE:
             self.game_result_type = GameResultType.LOST
+            self.game_finished = time.time()
+            self.elapsed_seconds = self.game_finished - self.game_started
+            print(f'Elapsed seconds: {self.elapsed_seconds}')
         else:
             self.player_map[row][column] = self.game_map[row][column]
             print(f"row: {row}, column: {column}, value: {self.player_map[row][column]}")
