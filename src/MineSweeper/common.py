@@ -68,5 +68,5 @@ def set_game_logo(w, h, surface):
     logo = pygame.image.load(path.join(assets_folder, "logo.png"))
     logo = pygame.transform.scale(logo, (w, h))
     logo = logo.convert()
-    logo.set_colorkey(BLACK)
+    #logo.set_colorkey(BLACK)
     surface.blit(logo, pygame.Rect(0, 0, w, h))
