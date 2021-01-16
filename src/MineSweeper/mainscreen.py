@@ -40,7 +40,11 @@ class MainScreen:
         # Zvuky, hudba, animace
         explosion_sound = pygame.mixer.Sound(path.join(common.assets_folder, "vybuch.mp3"))
 
+<<<<<<< HEAD
         screen = pygame.display.set_mode((self.width * 36, self.height * 36))
+=======
+        screen = pygame.display.set_mode((self.width * common.SQ_SIZE, self.height * common.SQ_SIZE))
+>>>>>>> main
         pygame.display.set_caption("minesweeper")
         common.set_game_icon()
         clock = pygame.time.Clock()
