@@ -24,6 +24,15 @@ class MainScreen:
         pole = pygame.image.load(path.join(folder, "pole.png"))
         pole_odkryte = pygame.image.load(path.join(folder, "pole-odkryte.png"))
         vybuch = pygame.mixer.Sound(path.join(folder, "vybuch.mp3"))
+        pole1 = pygame.image.load(path.join(folder, "pole.png"))
+        pole2 = pygame.image.load(path.join(folder, "pole.png"))
+        pole3 = pygame.image.load(path.join(folder, "pole.png"))
+        pole4 = pygame.image.load(path.join(folder, "pole.png"))
+        pole5 = pygame.image.load(path.join(folder, "pole.png"))
+        pole6 = pygame.image.load(path.join(folder, "pole.png"))
+        pole7 = pygame.image.load(path.join(folder, "pole.png"))
+        pole8 = pygame.image.load(path.join(folder, "pole.png"))
+        vlajka = pygame.image.load(path.join(folder, "flag.png"))
 
 
 
