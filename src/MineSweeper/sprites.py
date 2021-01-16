@@ -10,8 +10,8 @@ class Brick(pygame.sprite.Sprite):
         self.images = images
         self.image = images[SpecialSquareValues.FOG]
         self.rect = self.image.get_rect()
-        self.rect.x = r * SQ_SIZE
-        self.rect.y = c * SQ_SIZE
+        self.rect.x = c * SQ_SIZE
+        self.rect.y = r * SQ_SIZE
         self.value = SpecialSquareValues.FOG
 
     def update(self) -> None:

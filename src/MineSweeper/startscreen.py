@@ -55,7 +55,7 @@ class StartScreen:
                 return common.Intermediate()
             if self.button('E X P E R T', 50, 350, 270, 50, click):
                 return common.Expert()
-            if self.button('K O N E C', 50, 450, 270, 50, click):
+            if self.button('Q U I T   G A M E', 50, 450, 270, 50, click):
                 pygame.quit()
                 sys.exit()
             pygame.display.flip()
