@@ -34,7 +34,8 @@ class StartScreen:
 
     def show(self) -> common.Difficulty:
         self.screen = pygame.display.set_mode((370, 600))
-        pygame.display.set_caption("Start of the game")
+        pygame.display.set_caption("minesweeper")
+
 
         # TODO: udelat nejaky uvodni label (uvitani do hry)
         # TODO: udelat tlacitko pro vybrani obriznosti

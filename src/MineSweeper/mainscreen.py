@@ -19,6 +19,12 @@ class MainScreen:
         self.images = {}
         self.bricks = pygame.sprite.Group()
 
+    @staticmethod
+    def load_icon():
+        icon = pygame.image.load(path.join(assets_folder, "mina.png")).convert()
+        icon.set_colorkey(common.BLACK)
+        pygame.display.set_icon(icon)
+
     def load_images(self):
         self.images[common.SpecialSquareValues.MINE] = pygame.image.load(path.join(assets_folder, "mina2.png")).convert()
         self.images[common.SpecialSquareValues.FLAG] = pygame.image.load(path.join(assets_folder, "flag2.png")).convert()
@@ -45,6 +51,7 @@ class MainScreen:
 
         screen = pygame.display.set_mode((self.width * 32, self.height * 32))
         pygame.display.set_caption("minesweeper")
+        self.load_icon()
         clock = pygame.time.Clock()
         self.game_state = GameState(self.width, self.height, self.mines)
         self.initialize_sprites()

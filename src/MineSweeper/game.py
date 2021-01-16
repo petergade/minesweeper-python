@@ -22,7 +22,7 @@ class Game:
         start_background_music()
         start_screen = StartScreen()
         difficulty = start_screen.show()
-        main_screen = MainScreen(common.Intermediate())
+        main_screen = MainScreen(difficulty)
         game_result = main_screen.show()
         end_screen = EndScreen(game_result)
         end_screen.show()
