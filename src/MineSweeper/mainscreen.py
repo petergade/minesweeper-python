@@ -5,10 +5,7 @@ import time
 from os import path
 from gamestate import GameState
 
-# TODO: toto by melo zmizet jakmile vykreslime obrazovku pomoci predanych parametru z difficulty
-WIDTH = HEIGHT = 512
-DIMENSION = 8
-SQ_SIZE = HEIGHT // DIMENSION
+SQ_SIZE = 36
 
 assets_folder = path.join(path.dirname(__file__), "assets")
 
@@ -34,8 +31,8 @@ class MainScreen:
         # TODO: podle width a height urcit rozmery obrazovky a kosticky
         # TODO: nacteni grafiky, zvuků, hudby, animací
 
-        player = Spritesheet(path.join(folder, ""))
-        folder = path.dirname(_file_)
+        #player = Spritesheet(path.join(folder, ""))
+        #folder = path.dirname(_file_)
 
         # Grafika
         self.load_images()
@@ -44,7 +41,7 @@ class MainScreen:
         explosion_sound = pygame.mixer.Sound(path.join(assets_folder, "vybuch.mp3"))
         background_music = pygame.mixer.Sound(path.join(assets_folder, "relax-mix.mp3"))
 
-        screen = pygame.display.set_mode((512, 512))
+        screen = pygame.display.set_mode((self.width * 32, self.height * 32))
         pygame.display.set_caption("minesweeper")
         clock = pygame.time.Clock()
         self.game_state = GameState(self.width, self.height, self.mines)
@@ -91,15 +88,15 @@ class MainScreen:
             map_to_draw = self.game_state.game_map
         else:
             map_to_draw = self.game_state.player_map if self.hide_board else self.game_state.game_map
-        for r in range(DIMENSION):
-            for c in range(DIMENSION):
+        for r in range(self.height):
+            for c in range(self.width):
                 pygame.draw.rect(screen, common.GREY, pygame.Rect(c * SQ_SIZE, r * SQ_SIZE, SQ_SIZE, SQ_SIZE), 2)
         for r in range(self.height):
             for c in range(self.width):
                 text = self.get_text_to_draw(map_to_draw[r][c])
                 text_surface = common.FONT.render(text, True, common.BLACK)
                 text_rect = text_surface.get_rect()
-                text_rect.center = (c * SQ_SIZE + 30, r * SQ_SIZE + 30)
+                text_rect.center = (c * SQ_SIZE + 16, r * SQ_SIZE + 16)
                 screen.blit(text_surface, text_rect)
 
     @staticmethod

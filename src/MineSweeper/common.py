@@ -48,4 +48,4 @@ BLACK = pygame.Color("black")
 GREY = pygame.Color("grey")
 
 pygame.font.init()
-FONT = pygame.font.Font("freesansbold.ttf", 32)
+FONT = pygame.font.Font("freesansbold.ttf", 24)
