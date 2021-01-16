@@ -52,6 +52,7 @@ class GameState:
             self.game_finished = time.time()
             self.elapsed_seconds = self.game_finished - self.game_started
             print(f'Elapsed seconds: {self.elapsed_seconds}')
+            return True
         else:
             self.player_map[row][column] = self.game_map[row][column]
             print(f"row: {row}, column: {column}, value: {self.player_map[row][column]}")
@@ -66,8 +67,9 @@ class GameState:
                     else:
                         if self.player_map[end_row][end_col] == FOG:
                             self.reveal(end_row, end_col)
+                return False
             else:
-                return
+                return False
 
     def add_flag(self, row, column):
         if self.player_map[row][column] == FOG:

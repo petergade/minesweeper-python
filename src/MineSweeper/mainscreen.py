@@ -43,6 +43,8 @@ class MainScreen:
         # Zvuky, hudba, animace
         explosion_sound = pygame.mixer.Sound(path.join(assets_folder, "vybuch.mp3"))
         background_music = pygame.mixer.Sound(path.join(assets_folder, "relax-mix.mp3"))
+        pygame.mixer.init()
+        background_music.play()
 
         screen = pygame.display.set_mode((self.width * 32, self.height * 32))
         pygame.display.set_caption("minesweeper")
@@ -61,14 +63,13 @@ class MainScreen:
                     pygame.quit()
                     sys.exit()
                 elif e.type == pygame.MOUSEBUTTONUP:
-                    # TODO: udelat detekci kolize se spritem jak rikal Safr
-                    location = pygame.mouse.get_pos()
                     for brick in self.bricks:
                         if brick.rect.collidepoint(e.pos):
                             row = brick.r
                             col = brick.c
                             if e.button == 1:  # leve tlacitko
-                                self.game_state.reveal(row, col)
+                                if self.game_state.reveal(row, col):
+                                    explosion_sound.play()
                             elif e.button == 3:  # prave tlacitko
                                 self.game_state.add_flag(row, col)
                 elif e.type == pygame.KEYDOWN:
