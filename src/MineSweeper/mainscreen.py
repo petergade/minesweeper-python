@@ -177,8 +177,6 @@ class MainScreen:
         if self.game_state.game_result_type == common.GameResultType.LOST:
             self.draw_centered_text("L O S T", common.BIG_FONT, 200, alliasing=True, colour=common.RED)
 
-
-
         pygame.display.flip()
         waiting = True
         while waiting:
