@@ -6,7 +6,7 @@ from os import path
 from gamestate import GameState
 from sprites import Brick, Emoji
 
-STATUS_BAR_PADDINGTOP = 24
+
 
 class MainScreen:
     def __init__(self, difficulty: common.Difficulty):
@@ -55,8 +55,8 @@ class MainScreen:
         self.game_state = GameState(self.width, self.height, self.mines)
         self.initialize_bricks()
         self.initialize_emojis()
-        self.draw_text("Time: ", common.FONT, (self.width * common.SQ_SIZE) - 130, common.LOGO_HEIGHT + STATUS_BAR_PADDINGTOP )
-        self.draw_text("Mines: ", common.FONT, 30, common.LOGO_HEIGHT + STATUS_BAR_PADDINGTOP )
+        self.draw_text("Time: ", common.FONT, (self.width * common.SQ_SIZE) - 130, common.LOGO_HEIGHT + common.STATUS_BAR_PADDINGTOP)
+        self.draw_text("Mines: ", common.FONT, 30, common.LOGO_HEIGHT + common.STATUS_BAR_PADDINGTOP)
         running = True
 
         while running:
@@ -90,10 +90,10 @@ class MainScreen:
 
             # render
             self.screen.fill(common.GREY2)
-            common.set_game_logo((self.width * common.SQ_SIZE)/2-common.LOGO_WIDTH/2,10, self.screen)
-            self.draw_text("Mines: ", common.FONT, 10, common.LOGO_HEIGHT + STATUS_BAR_PADDINGTOP )
+            common.set_game_logo((self.width * common.SQ_SIZE)/2-common.LOGO_WIDTH/2, 10, self.screen)
+            self.draw_text("Mines: ", common.FONT, 10, common.LOGO_HEIGHT + common.STATUS_BAR_PADDINGTOP)
             self.draw_remaining_mines()
-            self.draw_text("Time: ", common.FONT, (self.width * common.SQ_SIZE) - 130, common.LOGO_HEIGHT + STATUS_BAR_PADDINGTOP )
+            self.draw_text("Time: ", common.FONT, (self.width * common.SQ_SIZE) - 130, common.LOGO_HEIGHT + common.STATUS_BAR_PADDINGTOP)
             self.draw_elapsed_time()
             self.bricks.draw(self.screen)
             self.emojis.draw(self.screen)
@@ -111,7 +111,7 @@ class MainScreen:
                 self.bricks.add(brick)
 
     def initialize_emojis(self):
-        emoji = Emoji((self.width * common.SQ_SIZE // 2) - 20, common.LOGO_HEIGHT, self.images)
+        emoji = Emoji((self.width * common.SQ_SIZE // 2) - 20, common.LOGO_HEIGHT + common.STATUS_BAR_PADDINGTOP - 10, self.images)
         self.emojis.add(emoji)
 
     def update_bricks(self) -> None:
@@ -135,7 +135,7 @@ class MainScreen:
         if elapsed_time is None:
             return
         elapsed_time_str = "%.1fs" % elapsed_time
-        self.draw_text(elapsed_time_str, common.FONT, (self.width * common.SQ_SIZE) - 60, common.LOGO_HEIGHT + STATUS_BAR_PADDINGTOP )
+        self.draw_text(elapsed_time_str, common.FONT, (self.width * common.SQ_SIZE) - 60, common.LOGO_HEIGHT + common.STATUS_BAR_PADDINGTOP)
 
     def draw_remaining_mines(self):
-        self.draw_text(str(self.game_state.mines_not_selected), common.FONT, 90, common.LOGO_HEIGHT + STATUS_BAR_PADDINGTOP )
+        self.draw_text(str(self.game_state.mines_not_selected), common.FONT, 90, common.LOGO_HEIGHT + common.STATUS_BAR_PADDINGTOP)

@@ -47,6 +47,7 @@ SQ_SIZE = 36
 LOGO_HEIGHT = 80
 LOGO_WIDTH = 320
 STATUS_BAR_HEIGHT = 36
+STATUS_BAR_PADDINGTOP = 24
 WHITE = pygame.Color("white")
 BLACK = pygame.Color("black")
 GREY = pygame.Color("grey")
