@@ -24,8 +24,8 @@ class MainScreen:
         self.images[common.SpecialSquareValues.FLAG] = pygame.image.load(path.join(common.assets_folder, "flag2.png")).convert()
         self.images[common.SpecialSquareValues.FOG] = pygame.image.load(path.join(common.assets_folder, "pole.png")).convert()
         self.images[0] = pygame.image.load(path.join(common.assets_folder, "pole-odkryte.png")).convert()
-        self.images["emoji-happy"] = pygame.image.load(path.join(common.assets_folder, "emoji-smiley.png")).convert()
-        self.images["emoji-sad"] = pygame.image.load(path.join(common.assets_folder, "emoji-exploding.png")).convert()
+        self.images["emoji-happy"] = pygame.image.load(path.join(common.assets_folder, "emoji-smiley.jpg")).convert()
+        self.images["emoji-sad"] = pygame.image.load(path.join(common.assets_folder, "emoji-exploding.jpg")).convert()
         for i in range(8):
             self.images[i + 1] = pygame.image.load(path.join(common.assets_folder, f"pole-{i + 1}.png")).convert()
 
