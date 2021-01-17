@@ -6,7 +6,6 @@ from gamestate import GameState
 from sprites import Brick, Emoji, Explosion, SpriteSheet
 
 
-
 class MainScreen:
     def __init__(self, difficulty: common.Difficulty):
         self.hide_board = True  # parametr pro testovani, zda se ma zobrazovat zakryta nebo odkryta hraci plocha
@@ -66,8 +65,8 @@ class MainScreen:
 
         while running:
             if self.game_over and len(self.explosions) == 0:
-                if self.show_game_over_screen():
-                    return True
+                self.show_game_over_screen()
+                return
 
             # kontrola FPS
             self.clock.tick(common.MAX_FPS)
@@ -186,4 +185,4 @@ class MainScreen:
                     sys.exit()
                 if e.type == pygame.KEYUP:
                     if e.key == pygame.K_SPACE:
-                        return True
+                        return

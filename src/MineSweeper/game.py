@@ -19,13 +19,12 @@ class Game:
 
     def start(self):
         start_background_music()
-        repeat = True
 
-        while repeat:
+        while True:
             start_screen = StartScreen()
             difficulty = start_screen.show()
             main_screen = MainScreen(difficulty)
-            repeat = main_screen.show()
+            main_screen.show()
 
 
 if __name__ == "__main__":
