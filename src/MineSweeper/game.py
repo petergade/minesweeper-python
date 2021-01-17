@@ -1,7 +1,6 @@
 import pygame
-import common
+
 from startscreen import StartScreen
-from endscreen import EndScreen
 from mainscreen import MainScreen
 import os
 
