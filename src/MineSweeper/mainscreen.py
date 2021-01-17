@@ -13,12 +13,14 @@ class MainScreen:
         self.hide_board = True  # parametr pro testovani, zda se ma zobrazovat zakryta nebo odkryta hraci plocha
         self.game_state = None
         self.screen = None
+        self.clock = None
         self.width: int = difficulty.width
         self.height: int = difficulty.height
         self.mines: int = difficulty.mines
         self.images = {}
         self.bricks = pygame.sprite.Group()
         self.emojis = pygame.sprite.Group()
+        self.game_over = False
 
     def load_images(self):
         self.images[common.SpecialSquareValues.MINE] = pygame.image.load(path.join(common.assets_folder, "mina2.png")).convert()
@@ -36,7 +38,7 @@ class MainScreen:
         self.images["emoji-happy"] = pygame.transform.scale(self.images["emoji-happy"], (common.STATUS_BAR_HEIGHT, common.STATUS_BAR_HEIGHT))
         self.images["emoji-sad"] = pygame.transform.scale(self.images["emoji-sad"], (common.STATUS_BAR_HEIGHT, common.STATUS_BAR_HEIGHT))
 
-    def show(self) -> common.GameResult:
+    def show(self) -> bool:
 
         # Grafika
         self.load_images()
@@ -46,12 +48,12 @@ class MainScreen:
         explosion_sound = pygame.mixer.Sound(path.join(common.assets_folder, "vybuch.mp3"))
 
         self.screen = pygame.display.set_mode((self.width * common.SQ_SIZE, self.height * common.SQ_SIZE +
-                                          common.LOGO_HEIGHT + common.STATUS_BAR_HEIGHT))
+                                          common.LOGO_HEIGHT + common.STATUS_BAR_HEIGHT + common.STATUS_BAR_PADDINGTOP))
         pygame.display.set_caption("Minesweeper")
         common.set_game_icon()
         self.screen.fill(common.GREY2)
         common.set_game_logo((self.width * common.SQ_SIZE)/2-common.LOGO_WIDTH/2, 10, self.screen)
-        clock = pygame.time.Clock()
+        self.clock = pygame.time.Clock()
         self.game_state = GameState(self.width, self.height, self.mines)
         self.initialize_bricks()
         self.initialize_emojis()
@@ -60,8 +62,12 @@ class MainScreen:
         running = True
 
         while running:
+            if self.game_over:
+                if self.show_game_over_screen():
+                    return True
+
             # kontrola FPS
-            clock.tick(common.MAX_FPS)
+            self.clock.tick(common.MAX_FPS)
 
             for e in pygame.event.get():
                 #print(e)
@@ -78,7 +84,7 @@ class MainScreen:
                                     explosion_sound.play()
                             elif e.button == 3:  # prave tlacitko
                                 self.game_state.add_flag(row, col)
-                elif e.type == pygame.KEYDOWN:
+                elif e.type == pygame.KEYUP:
                     if e.key == pygame.K_q:
                         self.hide_board = not self.hide_board
 
@@ -101,8 +107,7 @@ class MainScreen:
 
             if self.game_state.game_result_type == common.GameResultType.LOST or \
                     self.game_state.game_result_type == common.GameResultType.WIN:
-                time.sleep(5)
-                return common.GameResult(self.game_state.game_result_type, self.game_state.elapsed_seconds)
+                self.game_over = True
 
     def initialize_bricks(self):
         for r in range(self.height):
@@ -126,12 +131,21 @@ class MainScreen:
         for emoji in self.emojis:
             emoji.is_happy = False if self.game_state.game_result_type == common.GameResultType.LOST else True
 
-    def draw_text(self, text, font, x, y, colour=common.BLACK):
-        text_surface = font.render(text, False, colour)
+    def draw_text(self, text, font, x, y, alliasing=False, colour=common.BLACK):
+        text_surface = font.render(text, alliasing, colour)
         self.screen.blit(text_surface, (x, y))
 
+    def draw_centered_text(self, text, font, alliasing=False, colour=common.BLACK):
+        text_surface = font.render(text, alliasing, colour)
+        text_rect = text_surface.get_rect()
+        text_rect.center = self.screen.get_rect().center
+        self.screen.blit(text_surface, text_rect.topleft)
+
     def draw_elapsed_time(self):
-        elapsed_time = self.game_state.get_elapsed_time()
+        if self.game_over:
+            elapsed_time = self.game_state.game_duration_in_seconds
+        else:
+            elapsed_time = self.game_state.get_elapsed_time()
         if elapsed_time is None:
             return
         elapsed_time_str = "%.1fs" % elapsed_time
@@ -139,3 +153,17 @@ class MainScreen:
 
     def draw_remaining_mines(self):
         self.draw_text(str(self.game_state.mines_not_selected), common.FONT, 90, common.LOGO_HEIGHT + common.STATUS_BAR_PADDINGTOP)
+
+    def show_game_over_screen(self):
+        self.draw_centered_text("G A M E  O V E R", common.BIG_FONT, alliasing=True, colour=common.WHITE)
+        pygame.display.flip()
+        waiting = True
+        while waiting:
+            self.clock.tick(common.MAX_FPS)
+            for e in pygame.event.get():
+                if e.type == pygame.QUIT:
+                    pygame.quit()
+                    sys.exit()
+                if e.type == pygame.KEYUP:
+                    if e.key == pygame.K_SPACE:
+                        return True
