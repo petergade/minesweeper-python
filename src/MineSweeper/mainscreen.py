@@ -6,6 +6,7 @@ from os import path
 from gamestate import GameState
 from sprites import Brick, Emoji
 
+STATUS_BAR_PADDINGTOP = 24
 
 class MainScreen:
     def __init__(self, difficulty: common.Difficulty):
@@ -49,13 +50,13 @@ class MainScreen:
         pygame.display.set_caption("Minesweeper")
         common.set_game_icon()
         self.screen.fill(common.GREY2)
-        common.set_game_logo(self.width * common.SQ_SIZE, common.LOGO_HEIGHT, self.screen)
+        common.set_game_logo((self.width * common.SQ_SIZE)/2-common.LOGO_WIDTH/2, 10, self.screen)
         clock = pygame.time.Clock()
         self.game_state = GameState(self.width, self.height, self.mines)
         self.initialize_bricks()
         self.initialize_emojis()
-        self.draw_text("Time: ", common.FONT, (self.width * common.SQ_SIZE) - 130, common.LOGO_HEIGHT + 12)
-        self.draw_text("Mines: ", common.FONT, 30, common.LOGO_HEIGHT + 12)
+        self.draw_text("Time: ", common.FONT, (self.width * common.SQ_SIZE) - 130, common.LOGO_HEIGHT + STATUS_BAR_PADDINGTOP )
+        self.draw_text("Mines: ", common.FONT, 30, common.LOGO_HEIGHT + STATUS_BAR_PADDINGTOP )
         running = True
 
         while running:
@@ -89,10 +90,10 @@ class MainScreen:
 
             # render
             self.screen.fill(common.GREY2)
-            common.set_game_logo(self.width * common.SQ_SIZE, common.LOGO_HEIGHT, self.screen)
-            self.draw_text("Mines: ", common.FONT, 10, common.LOGO_HEIGHT + 12)
+            common.set_game_logo((self.width * common.SQ_SIZE)/2-common.LOGO_WIDTH/2,10, self.screen)
+            self.draw_text("Mines: ", common.FONT, 10, common.LOGO_HEIGHT + STATUS_BAR_PADDINGTOP )
             self.draw_remaining_mines()
-            self.draw_text("Time: ", common.FONT, (self.width * common.SQ_SIZE) - 130, common.LOGO_HEIGHT + 12)
+            self.draw_text("Time: ", common.FONT, (self.width * common.SQ_SIZE) - 130, common.LOGO_HEIGHT + STATUS_BAR_PADDINGTOP )
             self.draw_elapsed_time()
             self.bricks.draw(self.screen)
             self.emojis.draw(self.screen)
@@ -134,7 +135,7 @@ class MainScreen:
         if elapsed_time is None:
             return
         elapsed_time_str = "%.1fs" % elapsed_time
-        self.draw_text(elapsed_time_str, common.FONT, (self.width * common.SQ_SIZE) - 60, common.LOGO_HEIGHT + 12)
+        self.draw_text(elapsed_time_str, common.FONT, (self.width * common.SQ_SIZE) - 60, common.LOGO_HEIGHT + STATUS_BAR_PADDINGTOP )
 
     def draw_remaining_mines(self):
-        self.draw_text(str(self.game_state.mines_not_selected), common.FONT, 90, common.LOGO_HEIGHT + 12)
+        self.draw_text(str(self.game_state.mines_not_selected), common.FONT, 90, common.LOGO_HEIGHT + STATUS_BAR_PADDINGTOP )

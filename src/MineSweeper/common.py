@@ -44,7 +44,8 @@ class Expert(Difficulty):
 
 MAX_FPS = 30
 SQ_SIZE = 36
-LOGO_HEIGHT = 120
+LOGO_HEIGHT = 80
+LOGO_WIDTH = 320
 STATUS_BAR_HEIGHT = 36
 WHITE = pygame.Color("white")
 BLACK = pygame.Color("black")
@@ -66,9 +67,9 @@ def set_game_icon():
     pygame.display.set_icon(icon)
 
 
-def set_game_logo(w, h, surface):
+def set_game_logo(x, y, surface):
     logo = pygame.image.load(path.join(assets_folder, "logo2.jpg"))
-    logo = pygame.transform.scale(logo, (w, h))
+    logo = pygame.transform.scale(logo, (LOGO_WIDTH, LOGO_HEIGHT))
     logo = logo.convert()
     #logo.set_colorkey(BLACK)
-    surface.blit(logo, pygame.Rect(0, 0, w, h))
+    surface.blit(logo, pygame.Rect(x, y, LOGO_WIDTH, LOGO_HEIGHT))

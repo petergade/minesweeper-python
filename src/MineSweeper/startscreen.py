@@ -37,7 +37,7 @@ class StartScreen:
         # TODO: udelat nejaky uvodni label (uvitani do hry)
         # TODO: udelat prvky pro zadani sirky, vysky a poctu min (kdyz zbyde cas)
         self.screen.fill(common.GREY2)
-        common.set_game_logo(370, common.LOGO_HEIGHT, self.screen)
+        common.set_game_logo(0, 30, self.screen)
 
         while True:
             click = False

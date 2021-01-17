@@ -11,7 +11,7 @@ class Brick(pygame.sprite.Sprite):
         self.image = images[common.SpecialSquareValues.FOG]
         self.rect = self.image.get_rect()
         self.rect.x = c * common.SQ_SIZE
-        self.rect.y = common.LOGO_HEIGHT + common.STATUS_BAR_HEIGHT + r * common.SQ_SIZE
+        self.rect.y = common.LOGO_HEIGHT + common.STATUS_BAR_HEIGHT + r * common.SQ_SIZE + STATUS_BAR_PADDINGTOP
         self.value = common.SpecialSquareValues.FOG
 
     def update(self) -> None:
