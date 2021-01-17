@@ -1,7 +1,6 @@
 import pygame
 import common
 import sys
-import time
 from os import path
 from gamestate import GameState
 from sprites import Brick, Emoji, Explosion, SpriteSheet
