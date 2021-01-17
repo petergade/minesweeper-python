@@ -21,6 +21,7 @@ class GameState:
         self.elapsed_seconds = None
         self.game_started = None
         self.game_finished = None
+        self.mines_not_selected = mines
 
     def initialize_game_map(self, row_selected, column_selected):
         self.game_started = time.time()
@@ -78,8 +79,10 @@ class GameState:
     def add_flag(self, row, column):
         if self.player_map[row][column] == FOG:
             self.player_map[row][column] = FLAG
+            self.mines_not_selected -= 1
         elif self.player_map[row][column] == FLAG:
             self.player_map[row][column] = FOG
+            self.mines_not_selected += 1
 
     def check_victory(self) -> bool:
         unrevealed_count = self.get_unrevealed_count()

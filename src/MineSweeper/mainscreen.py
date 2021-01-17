@@ -55,6 +55,7 @@ class MainScreen:
         self.initialize_bricks()
         self.initialize_emojis()
         self.draw_text("Time: ", common.FONT, (self.width * common.SQ_SIZE) - 130, common.LOGO_HEIGHT + 12)
+        self.draw_text("Mines: ", common.FONT, 30, common.LOGO_HEIGHT + 12)
         running = True
 
         while running:
@@ -88,6 +89,8 @@ class MainScreen:
 
             # render
             self.screen.fill(common.GREY2)
+            self.draw_text("Mines: ", common.FONT, 10, common.LOGO_HEIGHT + 12)
+            self.draw_remaining_mines()
             self.draw_text("Time: ", common.FONT, (self.width * common.SQ_SIZE) - 130, common.LOGO_HEIGHT + 12)
             self.draw_elapsed_time()
             self.bricks.draw(self.screen)
@@ -130,4 +133,7 @@ class MainScreen:
         if elapsed_time is None:
             return
         elapsed_time_str = "%.2f" % elapsed_time
-        self.draw_text(elapsed_time_str, common.FONT, (self.width * common.SQ_SIZE) - 50, common.LOGO_HEIGHT + 12)
+        self.draw_text(elapsed_time_str, common.FONT, (self.width * common.SQ_SIZE) - 60, common.LOGO_HEIGHT + 12)
+
+    def draw_remaining_mines(self):
+        self.draw_text(str(self.game_state.mines_not_selected), common.FONT, 90, common.LOGO_HEIGHT + 12)
