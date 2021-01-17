@@ -4,7 +4,7 @@ import sys
 import time
 from os import path
 from gamestate import GameState
-from sprites import Brick, Emoji
+from sprites import Brick, Emoji, Explosion, SpriteSheet
 
 
 
@@ -20,6 +20,7 @@ class MainScreen:
         self.images = {}
         self.bricks = pygame.sprite.Group()
         self.emojis = pygame.sprite.Group()
+        self.explosions = pygame.sprite.Group()
         self.game_over = False
 
     def load_images(self):
@@ -31,9 +32,12 @@ class MainScreen:
         self.images["emoji-sad"] = pygame.image.load(path.join(common.assets_folder, "emoji-exploding.jpg")).convert()
         for i in range(8):
             self.images[i + 1] = pygame.image.load(path.join(common.assets_folder, f"pole-{i + 1}.png")).convert()
+        self.images["explosion"] = pygame.image.load(path.join(common.assets_folder, "animation.png")).convert()
 
     def scale_images(self):
         for key in self.images.keys():
+            if key == "explosion":
+                continue
             self.images[key] = pygame.transform.scale(self.images[key], (common.SQ_SIZE, common.SQ_SIZE))
         self.images["emoji-happy"] = pygame.transform.scale(self.images["emoji-happy"], (common.STATUS_BAR_HEIGHT, common.STATUS_BAR_HEIGHT))
         self.images["emoji-sad"] = pygame.transform.scale(self.images["emoji-sad"], (common.STATUS_BAR_HEIGHT, common.STATUS_BAR_HEIGHT))
@@ -62,7 +66,7 @@ class MainScreen:
         running = True
 
         while running:
-            if self.game_over:
+            if self.game_over and len(self.explosions) == 0:
                 if self.show_game_over_screen():
                     return True
 
@@ -82,6 +86,7 @@ class MainScreen:
                             if e.button == 1:  # leve tlacitko
                                 if self.game_state.reveal(row, col):
                                     explosion_sound.play()
+                                    self.play_explosion_animation(brick.rect.center)
                             elif e.button == 3:  # prave tlacitko
                                 self.game_state.add_flag(row, col)
                 elif e.type == pygame.KEYUP:
@@ -93,6 +98,8 @@ class MainScreen:
             self.update_emojis()
             self.bricks.update()
             self.emojis.update()
+            self.explosions.update()
+            print(len(self.explosions))
 
             # render
             self.screen.fill(common.GREY2)
@@ -103,6 +110,7 @@ class MainScreen:
             self.draw_elapsed_time()
             self.bricks.draw(self.screen)
             self.emojis.draw(self.screen)
+            self.explosions.draw(self.screen)
             pygame.display.flip()
 
             if self.game_state.game_result_type == common.GameResultType.LOST or \
@@ -118,6 +126,10 @@ class MainScreen:
     def initialize_emojis(self):
         emoji = Emoji((self.width * common.SQ_SIZE // 2) - 20, common.LOGO_HEIGHT + common.STATUS_BAR_PADDINGTOP - 10, self.images)
         self.emojis.add(emoji)
+
+    def play_explosion_animation(self, center):
+        explosion = Explosion(center, SpriteSheet(self.images["explosion"]))
+        self.explosions.add(explosion)
 
     def update_bricks(self) -> None:
         if self.game_state.game_result_type == common.GameResultType.LOST or self.game_state.game_result_type == common.GameResultType.WIN:
