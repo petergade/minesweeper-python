@@ -1,4 +1,4 @@
-from typing import List, Tuple
+from typing import List
 from common import SpecialSquareValues, GameResultType
 import random
 import time
@@ -96,4 +96,10 @@ class GameState:
                 if self.player_map[i][j] == SpecialSquareValues.FOG or self.player_map[i][j] == SpecialSquareValues.FLAG:
                     count += 1
         return count
+
+    def get_elapsed_time(self):
+        if self.is_initialized:
+            return time.time() - self.game_started
+        else:
+            return None
 
