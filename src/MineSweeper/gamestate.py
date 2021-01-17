@@ -18,7 +18,7 @@ class GameState:
         self.game_map: List[List[int]] = [[0 for _ in range(width)] for _ in range(height)]
         self.is_initialized = False
         self.game_result_type: GameResultType = GameResultType.UNKNOWN
-        self.elapsed_seconds = None
+        self.game_duration_in_seconds = None
         self.game_started = None
         self.game_finished = None
         self.mines_not_selected = mines
@@ -73,8 +73,8 @@ class GameState:
     def end_game(self, result_type):
         self.game_result_type = result_type
         self.game_finished = time.time()
-        self.elapsed_seconds = self.game_finished - self.game_started
-        print(f'Result: {str(result_type)}, Elapsed seconds: {self.elapsed_seconds}')
+        self.game_duration_in_seconds = self.game_finished - self.game_started
+        print(f'Result: {str(result_type)}, Elapsed seconds: {self.game_duration_in_seconds}')
 
     def add_flag(self, row, column):
         if self.player_map[row][column] == FOG:
