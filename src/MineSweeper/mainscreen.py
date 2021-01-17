@@ -147,10 +147,11 @@ class MainScreen:
         text_surface = font.render(text, alliasing, colour)
         self.screen.blit(text_surface, (x, y))
 
-    def draw_centered_text(self, text, font, alliasing=False, colour=common.BLACK):
+    def draw_centered_text(self, text, font, y, alliasing=False, colour=common.BLACK):
         text_surface = font.render(text, alliasing, colour)
         text_rect = text_surface.get_rect()
         text_rect.center = self.screen.get_rect().center
+        text_rect.y = y
         self.screen.blit(text_surface, text_rect.topleft)
 
     def draw_elapsed_time(self):
@@ -167,7 +168,7 @@ class MainScreen:
         self.draw_text(str(self.game_state.mines_not_selected), common.FONT, 90, common.LOGO_HEIGHT + common.STATUS_BAR_PADDINGTOP)
 
     def show_game_over_screen(self):
-        self.draw_centered_text("G A M E  O V E R", common.BIG_FONT, alliasing=True, colour=common.WHITE)
+        self.draw_centered_text("G A M E  O V E R", common.BIG_FONT, 10, alliasing=True, colour=common.WHITE)
         pygame.display.flip()
         waiting = True
         while waiting:
