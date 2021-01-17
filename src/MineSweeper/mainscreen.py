@@ -4,34 +4,39 @@ import sys
 import time
 from os import path
 from gamestate import GameState
-from sprites import Brick
+from sprites import Brick, Emoji
+
 
 
 class MainScreen:
     def __init__(self, difficulty: common.Difficulty):
         self.hide_board = True  # parametr pro testovani, zda se ma zobrazovat zakryta nebo odkryta hraci plocha
         self.game_state = None
+        self.screen = None
         self.width: int = difficulty.width
         self.height: int = difficulty.height
         self.mines: int = difficulty.mines
         self.images = {}
         self.bricks = pygame.sprite.Group()
+        self.emojis = pygame.sprite.Group()
 
     def load_images(self):
         self.images[common.SpecialSquareValues.MINE] = pygame.image.load(path.join(common.assets_folder, "mina2.png")).convert()
         self.images[common.SpecialSquareValues.FLAG] = pygame.image.load(path.join(common.assets_folder, "flag2.png")).convert()
         self.images[common.SpecialSquareValues.FOG] = pygame.image.load(path.join(common.assets_folder, "pole.png")).convert()
         self.images[0] = pygame.image.load(path.join(common.assets_folder, "pole-odkryte.png")).convert()
+        self.images["emoji-happy"] = pygame.image.load(path.join(common.assets_folder, "emoji-smiley.jpg")).convert()
+        self.images["emoji-sad"] = pygame.image.load(path.join(common.assets_folder, "emoji-exploding.jpg")).convert()
         for i in range(8):
             self.images[i + 1] = pygame.image.load(path.join(common.assets_folder, f"pole-{i + 1}.png")).convert()
 
     def scale_images(self):
         for key in self.images.keys():
             self.images[key] = pygame.transform.scale(self.images[key], (common.SQ_SIZE, common.SQ_SIZE))
+        self.images["emoji-happy"] = pygame.transform.scale(self.images["emoji-happy"], (common.STATUS_BAR_HEIGHT, common.STATUS_BAR_HEIGHT))
+        self.images["emoji-sad"] = pygame.transform.scale(self.images["emoji-sad"], (common.STATUS_BAR_HEIGHT, common.STATUS_BAR_HEIGHT))
 
     def show(self) -> common.GameResult:
-        # TODO: podle width a height urcit rozmery obrazovky a kosticky
-        # TODO: nacteni grafiky, zvuků, hudby, animací
 
         # Grafika
         self.load_images()
@@ -40,16 +45,18 @@ class MainScreen:
         # Zvuky, hudba, animace
         explosion_sound = pygame.mixer.Sound(path.join(common.assets_folder, "vybuch.mp3"))
 
-<<<<<<< HEAD
-        screen = pygame.display.set_mode((self.width * 36, self.height * 36))
-=======
-        screen = pygame.display.set_mode((self.width * common.SQ_SIZE, self.height * common.SQ_SIZE))
->>>>>>> main
-        pygame.display.set_caption("minesweeper")
+        self.screen = pygame.display.set_mode((self.width * common.SQ_SIZE, self.height * common.SQ_SIZE +
+                                          common.LOGO_HEIGHT + common.STATUS_BAR_HEIGHT))
+        pygame.display.set_caption("Minesweeper")
         common.set_game_icon()
+        self.screen.fill(common.GREY2)
+        common.set_game_logo((self.width * common.SQ_SIZE)/2-common.LOGO_WIDTH/2, 10, self.screen)
         clock = pygame.time.Clock()
         self.game_state = GameState(self.width, self.height, self.mines)
-        self.initialize_sprites()
+        self.initialize_bricks()
+        self.initialize_emojis()
+        self.draw_text("Time: ", common.FONT, (self.width * common.SQ_SIZE) - 130, common.LOGO_HEIGHT + common.STATUS_BAR_PADDINGTOP)
+        self.draw_text("Mines: ", common.FONT, 30, common.LOGO_HEIGHT + common.STATUS_BAR_PADDINGTOP)
         running = True
 
         while running:
@@ -77,23 +84,35 @@ class MainScreen:
 
             # update
             self.update_bricks()
+            self.update_emojis()
             self.bricks.update()
+            self.emojis.update()
 
             # render
-            self.bricks.draw(screen)
+            self.screen.fill(common.GREY2)
+            common.set_game_logo((self.width * common.SQ_SIZE)/2-common.LOGO_WIDTH/2, 10, self.screen)
+            self.draw_text("Mines: ", common.FONT, 10, common.LOGO_HEIGHT + common.STATUS_BAR_PADDINGTOP)
+            self.draw_remaining_mines()
+            self.draw_text("Time: ", common.FONT, (self.width * common.SQ_SIZE) - 130, common.LOGO_HEIGHT + common.STATUS_BAR_PADDINGTOP)
+            self.draw_elapsed_time()
+            self.bricks.draw(self.screen)
+            self.emojis.draw(self.screen)
             pygame.display.flip()
 
             if self.game_state.game_result_type == common.GameResultType.LOST or \
                     self.game_state.game_result_type == common.GameResultType.WIN:
-                time.sleep(2)
-                # TODO: nahradit skutecny casem
-                return common.GameResult(self.game_state.game_result_type, 0)
+                time.sleep(5)
+                return common.GameResult(self.game_state.game_result_type, self.game_state.elapsed_seconds)
 
-    def initialize_sprites(self):
+    def initialize_bricks(self):
         for r in range(self.height):
             for c in range(self.width):
                 brick = Brick(r, c, self.images)
                 self.bricks.add(brick)
+
+    def initialize_emojis(self):
+        emoji = Emoji((self.width * common.SQ_SIZE // 2) - 20, common.LOGO_HEIGHT + common.STATUS_BAR_PADDINGTOP - 10, self.images)
+        self.emojis.add(emoji)
 
     def update_bricks(self) -> None:
         if self.game_state.game_result_type == common.GameResultType.LOST or self.game_state.game_result_type == common.GameResultType.WIN:
@@ -103,14 +122,20 @@ class MainScreen:
         for brick in self.bricks:
             brick.value = map_to_draw[brick.r][brick.c]
 
+    def update_emojis(self):
+        for emoji in self.emojis:
+            emoji.is_happy = False if self.game_state.game_result_type == common.GameResultType.LOST else True
 
-    @staticmethod
-    def get_text_to_draw(square_type: int) -> str:
-        if square_type == common.SpecialSquareValues.FOG:
-            return 'F'
-        elif square_type == common.SpecialSquareValues.FLAG:
-            return 'V'
-        elif square_type == common.SpecialSquareValues.MINE:
-            return 'X'
-        else:
-            return str(square_type)
+    def draw_text(self, text, font, x, y, colour=common.BLACK):
+        text_surface = font.render(text, False, colour)
+        self.screen.blit(text_surface, (x, y))
+
+    def draw_elapsed_time(self):
+        elapsed_time = self.game_state.get_elapsed_time()
+        if elapsed_time is None:
+            return
+        elapsed_time_str = "%.1fs" % elapsed_time
+        self.draw_text(elapsed_time_str, common.FONT, (self.width * common.SQ_SIZE) - 60, common.LOGO_HEIGHT + common.STATUS_BAR_PADDINGTOP)
+
+    def draw_remaining_mines(self):
+        self.draw_text(str(self.game_state.mines_not_selected), common.FONT, 90, common.LOGO_HEIGHT + common.STATUS_BAR_PADDINGTOP)

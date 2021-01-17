@@ -31,13 +31,13 @@ class StartScreen:
 
     def show(self) -> common.Difficulty:
         self.screen = pygame.display.set_mode((370, 600))
-        pygame.display.set_caption("minesweeper")
+        pygame.display.set_caption("Minesweeper")
         common.set_game_icon()
 
         # TODO: udelat nejaky uvodni label (uvitani do hry)
-        # TODO: udelat tlacitko pro vybrani obriznosti
         # TODO: udelat prvky pro zadani sirky, vysky a poctu min (kdyz zbyde cas)
         self.screen.fill(common.GREY2)
+        common.set_game_logo(25, 30, self.screen)
 
         while True:
             click = False

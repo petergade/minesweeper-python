@@ -44,13 +44,17 @@ class Expert(Difficulty):
 
 MAX_FPS = 30
 SQ_SIZE = 36
+LOGO_HEIGHT = 80
+LOGO_WIDTH = 320
+STATUS_BAR_HEIGHT = 36
+STATUS_BAR_PADDINGTOP = 24
 WHITE = pygame.Color("white")
 BLACK = pygame.Color("black")
 GREY = pygame.Color("grey")
 BLUE = pygame.Color(33, 150, 243)
 LIGHT_BLUE = pygame.Color(0, 191, 255)
-GREY2 = pygame.Color(224,224,224)
-RED = pygame.Color(204,0,0)
+GREY2 = pygame.Color(224, 224, 224)
+RED = pygame.Color(204, 0, 0)
 
 pygame.font.init()
 FONT = pygame.font.Font("freesansbold.ttf", 24)
@@ -62,3 +66,11 @@ def set_game_icon():
     icon = pygame.image.load(path.join(assets_folder, "mina.png")).convert()
     icon.set_colorkey(BLACK)
     pygame.display.set_icon(icon)
+
+
+def set_game_logo(x, y, surface):
+    logo = pygame.image.load(path.join(assets_folder, "logo2.jpg"))
+    logo = pygame.transform.scale(logo, (LOGO_WIDTH, LOGO_HEIGHT))
+    logo = logo.convert()
+    #logo.set_colorkey(BLACK)
+    surface.blit(logo, pygame.Rect(x, y, LOGO_WIDTH, LOGO_HEIGHT))
