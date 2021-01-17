@@ -168,7 +168,17 @@ class MainScreen:
         self.draw_text(str(self.game_state.mines_not_selected), common.FONT, 90, common.LOGO_HEIGHT + common.STATUS_BAR_PADDINGTOP)
 
     def show_game_over_screen(self):
-        self.draw_centered_text("G A M E  O V E R", common.BIG_FONT, 10, alliasing=True, colour=common.WHITE)
+        self.draw_centered_text("G A M E  O V E R", common.BIG_FONT, 200, alliasing=True, colour=common.WHITE)
+        self.draw_centered_text("Press space to return to main menu", common.SMALL_FONT, 400, alliasing=True, colour=common.WHITE)
+
+        if self.game_state.game_result_type == common.GameResultType.WIN:
+            self.draw_centered_text("W I N", common.BIG_FONT, 300, alliasing=True, colour=common.WHITE)
+
+        if self.game_state.game_result_type == common.GameResultType.LOST:
+            self.draw_centered_text("L O S T", common.BIG_FONT, 300, alliasing=True, colour=common.WHITE)
+
+
+
         pygame.display.flip()
         waiting = True
         while waiting:

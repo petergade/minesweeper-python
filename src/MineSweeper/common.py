@@ -57,6 +57,7 @@ GREY2 = pygame.Color(224, 224, 224)
 RED = pygame.Color(204, 0, 0)
 
 pygame.font.init()
+SMALL_FONT = pygame.font.Font("freesansbold.ttf", 18)
 FONT = pygame.font.Font("freesansbold.ttf", 24)
 BIG_FONT = pygame.font.Font("freesansbold.ttf", 36)
 
