@@ -58,7 +58,7 @@ RED = pygame.Color(204, 0, 0)
 
 pygame.font.init()
 SMALL_FONT = pygame.font.Font("freesansbold.ttf", 18)
-FONT = pygame.font.Font("freesansbold.ttf", 24)
+FONT = pygame.font.Font("freesansbold.ttf", 20)
 BIG_FONT = pygame.font.Font("freesansbold.ttf", 36)
 
 assets_folder = path.join(path.dirname(__file__), "assets")
