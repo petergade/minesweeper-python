@@ -89,6 +89,7 @@ class MainScreen:
 
             # render
             self.screen.fill(common.GREY2)
+            common.set_game_logo(self.width * common.SQ_SIZE, common.LOGO_HEIGHT, self.screen)
             self.draw_text("Mines: ", common.FONT, 10, common.LOGO_HEIGHT + 12)
             self.draw_remaining_mines()
             self.draw_text("Time: ", common.FONT, (self.width * common.SQ_SIZE) - 130, common.LOGO_HEIGHT + 12)
@@ -132,7 +133,7 @@ class MainScreen:
         elapsed_time = self.game_state.get_elapsed_time()
         if elapsed_time is None:
             return
-        elapsed_time_str = "%.2f" % elapsed_time
+        elapsed_time_str = "%.1fs" % elapsed_time
         self.draw_text(elapsed_time_str, common.FONT, (self.width * common.SQ_SIZE) - 60, common.LOGO_HEIGHT + 12)
 
     def draw_remaining_mines(self):
