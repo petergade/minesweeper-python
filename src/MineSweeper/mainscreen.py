@@ -161,10 +161,10 @@ class MainScreen:
         if elapsed_time is None:
             return
         elapsed_time_str = "%.1fs" % elapsed_time
-        self.draw_text(elapsed_time_str, common.FONT, (self.width * common.SQ_SIZE) - 70, common.LOGO_HEIGHT + common.STATUS_BAR_PADDINGTOP)
+        self.draw_text(elapsed_time_str, common.FONT, (self.width * common.SQ_SIZE) - 65, common.LOGO_HEIGHT + common.STATUS_BAR_PADDINGTOP)
 
     def draw_remaining_mines(self):
-        self.draw_text(str(self.game_state.mines_not_selected), common.FONT, 80, common.LOGO_HEIGHT + common.STATUS_BAR_PADDINGTOP)
+        self.draw_text(str(self.game_state.mines_not_selected), common.FONT, 85, common.LOGO_HEIGHT + common.STATUS_BAR_PADDINGTOP)
 
     def show_game_over_screen(self):
         self.draw_centered_text("G A M E  O V E R", common.BIG_FONT, 260, alliasing=True, colour=common.RED)
