@@ -19,7 +19,7 @@ def start_background_music():
 class Game:
 
     def start(self):
-        #start_background_music()
+        start_background_music()
         start_screen = StartScreen()
         difficulty = start_screen.show()
         main_screen = MainScreen(difficulty)
